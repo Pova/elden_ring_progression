@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookbook Checklist</title>
+    <style>
+        .checklist {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        .checked {
+            background-color: lightgreen;
+        }
+        .unchecked {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+    <div class="checklist">
+        <h1>Cookbook Checklist</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Crafting Repertoire</th>
+                    <th>Location</th>
+                    <th>Collected</th>
+                </tr>
+            </thead>
+            <tbody id="cookbook-list">
+                <!-- Rows will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch the JSON data from the server
+        fetch('ER_cookbooks.json')
+        .then(response => response.json())
+        .then(cookbooks => {
+            // Function to update row color based on checkbox status
+            function updateRowColor(row, checked) {
+                if (checked) {
+                    row.classList.remove('unchecked');
+                    row.classList.add('checked');
+                } else {
+                    row.classList.remove('checked');
+                    row.classList.add('unchecked');
+                }
+            }
+
+            // Populate the table with cookbooks data
+            const tableBody = document.getElementById('cookbook-list');
+
+            cookbooks.forEach(cookbook => {
+                const row = document.createElement('tr');
+                row.classList.add('unchecked'); // Initially unchecked
+
+                row.innerHTML = `
+                    <td>${cookbook.Name}</td>
+                    <td>${cookbook['Crafting Repertoire']}</td>
+                    <td>${cookbook.Location}</td>
+                    <td><input type="checkbox"></td>
+                `;
+
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                checkbox.addEventListener('change', () => {
+                    updateRowColor(row, checkbox.checked);
+                });
+
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error loading the cookbooks:', error));
+    </script>
+</body>
+</html>

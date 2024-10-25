@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookbook Checklist</title>
+    <style>
+        .checklist {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="checklist">
+        <h1>Cookbook Checklist</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Crafting Repertoire</th>
+                    <th>Location</th>
+                    <th>Collected</th>
+                </tr>
+            </thead>
+            <tbody id="cookbook-list">
+                <!-- Rows will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Sample data representing cookbooks (replace this with your data or fetch it)
+        const cookbooks = [
+            { name: "Forager Brood Cookbook [1]", repertoire: "Spellproof Pickled Liver", location: "Near Ruined Forge", collected: false },
+            { name: "Forager Brood Cookbook [2]", repertoire: "Fireproof Pickled Liver", location: "Near Cliffroad Terminus", collected: false },
+            // Add more cookbooks as needed
+        ];
+
+        // Populate the table with cookbooks data
+        const tableBody = document.getElementById('cookbook-list');
+
+        cookbooks.forEach(cookbook => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${cookbook.name}</td>
+                <td>${cookbook.repertoire}</td>
+                <td>${cookbook.location}</td>
+                <td><input type="checkbox" ${cookbook.collected ? 'checked' : ''}></td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
